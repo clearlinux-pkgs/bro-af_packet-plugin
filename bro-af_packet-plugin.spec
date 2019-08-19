@@ -4,7 +4,7 @@
 #
 Name     : bro-af_packet-plugin
 Version  : 1.4.0
-Release  : 2
+Release  : 3
 URL      : https://github.com/J-Gras/bro-af_packet-plugin/archive/1.4.0.tar.gz
 Source0  : https://github.com/J-Gras/bro-af_packet-plugin/archive/1.4.0.tar.gz
 Summary  : No detailed summary available
@@ -50,8 +50,8 @@ license components for the bro-af_packet-plugin package.
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1561492242
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1566237795
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -63,11 +63,11 @@ export FCFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
 export FFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
 export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
 %cmake .. -DBinPAC_ROOT_DIR=`bro-config --binpac_root` -DBROKER_ROOT_DIR=`bro-config --broker_root` -DCAF_ROOT_DIR=`bro-config --caf_root` -DBRO_CONFIG_PLUGIN_DIR=`bro-config --plugin_dir` -DBRO_CONFIG_PREFIX=`bro-config --prefix` -DBRO_CONFIG_INCLUDE_DIR=`bro-config --include_dir` -DBRO_CONFIG_CMAKE_DIR=`bro-config --cmake_dir` -DCMAKE_MODULE_PATH=`bro-config --cmake_dir` -DKERNELHEADERS_ROOT_DIR=/usr/lib/modules/*/build
-make  %{?_smp_mflags}
+make  %{?_smp_mflags} VERBOSE=1
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1561492242
+export SOURCE_DATE_EPOCH=1566237795
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/bro-af_packet-plugin
 cp COPYING %{buildroot}/usr/share/package-licenses/bro-af_packet-plugin/COPYING
