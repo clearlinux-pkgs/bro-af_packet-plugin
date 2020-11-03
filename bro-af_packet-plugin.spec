@@ -4,7 +4,7 @@
 #
 Name     : bro-af_packet-plugin
 Version  : 1.4.0
-Release  : 3
+Release  : 4
 URL      : https://github.com/J-Gras/bro-af_packet-plugin/archive/1.4.0.tar.gz
 Source0  : https://github.com/J-Gras/bro-af_packet-plugin/archive/1.4.0.tar.gz
 Summary  : No detailed summary available
@@ -45,13 +45,14 @@ license components for the bro-af_packet-plugin package.
 
 %prep
 %setup -q -n bro-af_packet-plugin-1.4.0
+cd %{_builddir}/bro-af_packet-plugin-1.4.0
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1566237795
+export SOURCE_DATE_EPOCH=1604362945
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -59,18 +60,18 @@ export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
 export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FCFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
-export FFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 "
 export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
 %cmake .. -DBinPAC_ROOT_DIR=`bro-config --binpac_root` -DBROKER_ROOT_DIR=`bro-config --broker_root` -DCAF_ROOT_DIR=`bro-config --caf_root` -DBRO_CONFIG_PLUGIN_DIR=`bro-config --plugin_dir` -DBRO_CONFIG_PREFIX=`bro-config --prefix` -DBRO_CONFIG_INCLUDE_DIR=`bro-config --include_dir` -DBRO_CONFIG_CMAKE_DIR=`bro-config --cmake_dir` -DCMAKE_MODULE_PATH=`bro-config --cmake_dir` -DKERNELHEADERS_ROOT_DIR=/usr/lib/modules/*/build
-make  %{?_smp_mflags} VERBOSE=1
+make  %{?_smp_mflags}
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1566237795
+export SOURCE_DATE_EPOCH=1604362945
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/bro-af_packet-plugin
-cp COPYING %{buildroot}/usr/share/package-licenses/bro-af_packet-plugin/COPYING
+cp %{_builddir}/bro-af_packet-plugin-1.4.0/COPYING %{buildroot}/usr/share/package-licenses/bro-af_packet-plugin/4c678d3e7f9a92add94342451cb7918ecf4c9b5a
 pushd clr-build
 %make_install
 popd
@@ -93,4 +94,4 @@ popd
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/bro-af_packet-plugin/COPYING
+/usr/share/package-licenses/bro-af_packet-plugin/4c678d3e7f9a92add94342451cb7918ecf4c9b5a
